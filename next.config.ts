@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const nextConfig = {
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '10mb', // Increase for PDF uploads
+        },
+    },
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb', // For API routes
+        },
+    },
+}
 
-export default nextConfig;
+module.exports = nextConfig;
