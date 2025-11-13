@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Simple PDF Toolkit",
-  description: "A lightweight PDF split, rearrange, merge and export tool",
+  description: "A simple tool to organize, split, and merge PDF documents",
 };
 
 export default function RootLayout({
