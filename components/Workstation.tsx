@@ -32,14 +32,14 @@ export default function Workstation({
     return (
         <div className="flex-1 overflow-y-auto p-8 bg-gray-100">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-lg font-semibold text-gray-800 mb-6">
+                <h2 className="text-lg font-bold text-gray-800 mb-6">
                     Workstation ({pages.length} pages)
                 </h2>
 
                 {pages.length === 0 ? (
-                    <div className="text-center py-20 text-gray-400">
-                        <Upload size={48} className="mx-auto mb-4 opacity-50" />
-                        <p>No pages yet. Upload PDFs to start organizing.</p>
+                    <div className="text-center py-24 text-gray-400">
+                        <Upload size={56} className="mx-auto mb-4 opacity-40" />
+                        <p className="text-base">No pages yet. Upload PDFs to start organizing.</p>
                     </div>
                 ) : (
                     <div className="space-y-8">
@@ -48,21 +48,21 @@ export default function Workstation({
                             if (sectionPages.length === 0) return null;
 
                             return (
-                                <div key={section.id} className="bg-white rounded-lg shadow-sm p-6">
+                                <div key={section.id} className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
                                     {/* Section Header */}
                                     <div
                                         ref={(el) => {
                                             if (el) sectionRefs.current.set(section.id, el);
                                         }}
-                                        className="mb-4 pb-3 border-b-2 border-blue-500 flex items-center justify-between"
+                                        className="mb-4 pb-3 border-b-2 border-[#00BFA6] flex items-center justify-between"
                                     >
                                         <div className="flex items-center gap-2">
-                                            <span className="text-lg">📁</span>
-                                            <h3 className="text-base font-semibold text-blue-700">
+                                            <span className="text-xl">📁</span>
+                                            <h3 className="text-base font-bold text-[#00BFA6]">
                                                 {section.name}
                                             </h3>
-                                            <span className="text-sm text-gray-500">
-                        ({sectionPages.length} {sectionPages.length === 1 ? 'page' : 'pages'})
+                                            <span className="text-sm text-gray-600 font-medium bg-[#E0F7F4] px-2 py-0.5 rounded-full">
+                        {sectionPages.length} {sectionPages.length === 1 ? 'page' : 'pages'}
                       </span>
                                         </div>
                                     </div>
@@ -80,16 +80,16 @@ export default function Workstation({
                                                     onDragOver={onPageDragOver}
                                                     onDrop={(e) => onPageDrop(e, page.id)}
                                                     onDragEnd={onPageDragEnd}
-                                                    className={`group relative bg-white border-2 border-gray-300 rounded-lg overflow-hidden transition-all cursor-move hover:shadow-lg hover:border-blue-400
+                                                    className={`group relative bg-white border-2 border-gray-300 rounded-lg overflow-hidden transition-all cursor-move hover:shadow-lg hover:border-[#00BFA6]
                             ${draggedPageId === page.id ? 'opacity-40 scale-95' : ''}`}
                                                 >
                                                     {/* Drag Handle */}
-                                                    <div className="absolute top-1 left-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded p-1">
+                                                    <div className="absolute top-1 left-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 rounded p-1 shadow-sm">
                                                         <GripVertical size={16} className="text-gray-600" />
                                                     </div>
 
                                                     {/* Page Number Badge */}
-                                                    <div className="absolute top-1 right-1 z-10 bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded">
+                                                    <div className="absolute top-1 right-1 z-10 bg-[#00BFA6] text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
                                                         {page.pageNumber}
                                                     </div>
 
@@ -106,14 +106,14 @@ export default function Workstation({
                                                                 <svg className="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                                                 </svg>
-                                                                <span className="text-xs">Page {page.pageNumber}</span>
+                                                                <span className="text-xs font-medium">Page {page.pageNumber}</span>
                                                             </div>
                                                         )}
                                                     </div>
 
                                                     {/* Page Info */}
                                                     <div className="p-2 bg-gray-50 border-t border-gray-200">
-                                                        <p className="text-xs text-gray-600 truncate" title={page.fileName}>
+                                                        <p className="text-xs text-gray-700 truncate font-medium" title={page.fileName}>
                                                             {page.fileName}
                                                         </p>
                                                     </div>
@@ -126,7 +126,7 @@ export default function Workstation({
                                                                 onSplit(page.id);
                                                             }}
                                                             disabled={isLastInSection}
-                                                            className="w-full text-xs bg-orange-500 hover:bg-orange-600 text-white px-2 py-1.5 rounded flex items-center justify-center gap-1 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                            className="w-full text-xs bg-[#FF9500] hover:bg-[#FFAB33] text-white px-2 py-1.5 rounded-lg flex items-center justify-center gap-1 disabled:opacity-30 disabled:cursor-not-allowed transition-colors font-medium shadow-sm"
                                                             title="Split section after this page"
                                                         >
                                                             <Scissors size={12} />
@@ -142,7 +142,7 @@ export default function Workstation({
                                                                 input.onchange = (event) => onAddPages(event as unknown as React.ChangeEvent<HTMLInputElement>, page.id);
                                                                 input.click();
                                                             }}
-                                                            className="w-full text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1.5 rounded flex items-center justify-center gap-1 transition-colors"
+                                                            className="w-full text-xs bg-[#00BFA6] hover:bg-[#00D1B2] text-white px-2 py-1.5 rounded-lg flex items-center justify-center gap-1 transition-colors font-medium shadow-sm"
                                                             title="Add pages after this page"
                                                         >
                                                             <Plus size={12} />

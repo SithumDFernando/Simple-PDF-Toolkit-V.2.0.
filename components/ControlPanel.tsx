@@ -56,13 +56,14 @@ export default function ControlPanel({
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     return (
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
-            <div className="p-4 border-b border-gray-200">
+        <div className="w-80 bg-white border-r border-gray-200 flex flex-col shadow-sm">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-200">
                 <h1 className="text-xl font-bold text-gray-800">PDF Toolkit</h1>
-                <p className="text-sm text-gray-500 mt-1">Organize and merge PDFs</p>
+                <p className="text-sm text-gray-600 mt-1">Organize and merge PDFs</p>
             </div>
 
-            {/* Upload Button */}
+            {/* Upload Section */}
             <div className="p-4 border-b border-gray-200">
                 <input
                     ref={fileInputRef}
@@ -75,7 +76,7 @@ export default function ControlPanel({
                 <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
+                    className="w-full bg-[#00BFA6] hover:bg-[#00D1B2] text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium shadow-sm"
                 >
                     <Upload size={18} />
                     Upload PDF(s)
@@ -85,7 +86,7 @@ export default function ControlPanel({
                     <button
                         onClick={onClearAll}
                         disabled={isProcessing}
-                        className="w-full mt-2 bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors border border-red-200"
+                        className="w-full mt-2 bg-[#FFE5E5] hover:bg-[#FFD1D1] text-[#FF3B30] px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border border-[#FFBFBF] font-medium"
                     >
                         <Trash2 size={16} />
                         Clear All
@@ -100,7 +101,8 @@ export default function ControlPanel({
                 </h2>
 
                 {sections.length === 0 ? (
-                    <div className="text-center py-8 text-gray-400 text-sm">
+                    <div className="text-center py-12 text-gray-400 text-sm">
+                        <Upload size={32} className="mx-auto mb-3 opacity-40" />
                         Upload PDFs to get started
                     </div>
                 ) : (
@@ -114,9 +116,9 @@ export default function ControlPanel({
                                 onDragLeave={onSectionDragLeave}
                                 onDrop={(e) => onSectionDrop(e, index)}
                                 onDragEnd={onSectionDragEnd}
-                                className={`bg-gray-50 border border-gray-200 rounded-lg p-3 hover:border-gray-300 transition-all cursor-pointer
-                  ${draggedSectionIndex === index ? 'opacity-50' : ''}
-                  ${dragOverIndex === index && draggedSectionIndex !== index ? 'border-blue-500 border-2' : ''}`}
+                                className={`bg-gray-50 border border-gray-200 rounded-lg p-3 hover:border-[#00BFA6] hover:shadow-md transition-all cursor-pointer
+                  ${draggedSectionIndex === index ? 'opacity-50 scale-95' : ''}
+                  ${dragOverIndex === index && draggedSectionIndex !== index ? 'border-[#A259FF] border-2 shadow-lg' : ''}`}
                                 onClick={() => onScrollToSection(section.id)}
                             >
                                 <div className="flex items-start justify-between gap-2">
@@ -136,15 +138,16 @@ export default function ControlPanel({
                                                         if (e.key === 'Escape') onCancelRename();
                                                     }}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="w-full text-sm font-medium text-gray-800 border border-blue-500 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                    className="w-full text-sm font-medium text-gray-800 border border-[#00BFA6] rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#00BFA6]"
                                                     autoFocus
                                                 />
                                             ) : (
-                                                <div className="text-sm font-medium text-gray-800 truncate">
+                                                <div className="text-sm font-semibold text-gray-800 truncate">
                                                     {section.name}
                                                 </div>
                                             )}
-                                            <div className="text-xs text-gray-500 mt-1">
+                                            <div className="text-xs text-gray-600 mt-1 flex items-center gap-1">
+                                                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#00BFA6]"></span>
                                                 {section.pageIds.length} page(s)
                                             </div>
                                         </div>
@@ -155,7 +158,7 @@ export default function ControlPanel({
                                                 e.stopPropagation();
                                                 onStartRename(section.id, section.name);
                                             }}
-                                            className="text-blue-500 hover:text-blue-700 transition-colors"
+                                            className="text-[#00BFA6] hover:text-[#00D1B2] transition-colors p-1"
                                             title="Rename section"
                                         >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -167,7 +170,7 @@ export default function ControlPanel({
                                                 e.stopPropagation();
                                                 onDeleteSection(section.id);
                                             }}
-                                            className="text-red-500 hover:text-red-700 transition-colors"
+                                            className="text-[#FF3B30] hover:text-[#FF6259] transition-colors p-1"
                                             title="Delete section"
                                         >
                                             <Trash2 size={16} />
@@ -182,7 +185,7 @@ export default function ControlPanel({
                                             onMoveSectionUp(index);
                                         }}
                                         disabled={index === 0}
-                                        className="flex-1 text-xs bg-white border border-gray-300 px-2 py-1 rounded hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                        className="flex-1 text-xs bg-white border border-gray-300 px-2 py-1.5 rounded-lg hover:bg-gray-50 hover:border-[#00BFA6] disabled:opacity-30 disabled:cursor-not-allowed transition-colors font-medium"
                                     >
                                         ↑ Up
                                     </button>
@@ -192,7 +195,7 @@ export default function ControlPanel({
                                             onMoveSectionDown(index);
                                         }}
                                         disabled={index === sections.length - 1}
-                                        className="flex-1 text-xs bg-white border border-gray-300 px-2 py-1 rounded hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                        className="flex-1 text-xs bg-white border border-gray-300 px-2 py-1.5 rounded-lg hover:bg-gray-50 hover:border-[#00BFA6] disabled:opacity-30 disabled:cursor-not-allowed transition-colors font-medium"
                                     >
                                         ↓ Down
                                     </button>
@@ -208,7 +211,7 @@ export default function ControlPanel({
                 <button
                     onClick={onShowExportDialog}
                     disabled={sections.length === 0}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
+                    className="w-full bg-[#34C759] hover:bg-[#28A745] text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium shadow-sm"
                 >
                     <Download size={18} />
                     Merge & Export
