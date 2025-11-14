@@ -346,10 +346,10 @@ export default function PDFToolkit() {
         <div className="flex h-screen bg-gray-50">
             {/* Loading Overlay */}
             {isProcessing && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-3">
-                        <Loader2 className="animate-spin text-blue-600" size={32} />
-                        <p className="text-gray-700 font-medium">{uploadProgress}</p>
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-3 shadow-xl">
+                        <Loader2 className="animate-spin text-[#00BFA6]" size={40} />
+                        <p className="text-gray-700 font-semibold">{uploadProgress}</p>
                     </div>
                 </div>
             )}

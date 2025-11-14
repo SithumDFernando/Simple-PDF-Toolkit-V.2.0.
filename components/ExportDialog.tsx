@@ -39,11 +39,11 @@ export default function ExportDialog({
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
                 <div className="p-6 border-b border-gray-200">
                     <h2 className="text-xl font-bold text-gray-800">Merge & Export PDF</h2>
-                    <p className="text-sm text-gray-500 mt-1">Select sections to include in the final PDF</p>
+                    <p className="text-sm text-gray-600 mt-1">Select sections to include in the final PDF</p>
                 </div>
 
                 <div className="flex-1 overflow-hidden flex">
@@ -58,26 +58,26 @@ export default function ExportDialog({
                                 return (
                                     <label
                                         key={section.id}
-                                        className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                                        className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer hover:bg-[#E0F7F4] hover:border-[#00BFA6] transition-all"
                                     >
                                         <div className="relative">
                                             <input
                                                 type="checkbox"
                                                 checked={isSelected}
                                                 onChange={() => onToggleSection(section.id)}
-                                                className="w-5 h-5 cursor-pointer"
+                                                className="w-5 h-5 cursor-pointer accent-[#00BFA6]"
                                             />
                                             {isSelected && (
-                                                <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-bold">
+                                                <span className="absolute -top-1 -right-1 bg-[#A259FF] text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-bold shadow-sm">
                           {selectionOrder}
                         </span>
                                             )}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-sm font-medium text-gray-800 truncate">
+                                            <div className="text-sm font-semibold text-gray-800 truncate">
                                                 {section.name}
                                             </div>
-                                            <div className="text-xs text-gray-500">
+                                            <div className="text-xs text-gray-600 font-medium">
                                                 {section.pageIds.length} page(s)
                                             </div>
                                         </div>
@@ -94,7 +94,8 @@ export default function ExportDialog({
                         </h3>
 
                         {selectedSections.length === 0 ? (
-                            <div className="text-center py-12 text-gray-400 text-sm">
+                            <div className="text-center py-16 text-gray-400 text-sm">
+                                <Download size={32} className="mx-auto mb-3 opacity-40" />
                                 Select sections to preview
                             </div>
                         ) : (
@@ -102,7 +103,7 @@ export default function ExportDialog({
                                 {getPreviewPages().map((page, index) => (
                                     <div
                                         key={page.id}
-                                        className="bg-white border border-gray-200 rounded p-2 text-xs flex items-center gap-2"
+                                        className="bg-white border border-gray-200 rounded-lg p-2 text-xs flex items-center gap-2 hover:border-[#00BFA6] transition-colors"
                                     >
                                         {page.thumbnail && (
                                             <img
@@ -112,10 +113,10 @@ export default function ExportDialog({
                                             />
                                         )}
                                         <div className="flex-1">
-                      <span className="font-medium text-gray-700">
+                      <span className="font-bold text-gray-800">
                         Page {index + 1}:
                       </span>{' '}
-                                            <span className="text-gray-600">
+                                            <span className="text-gray-600 font-medium">
                         {page.fileName} (p{page.pageNumber})
                       </span>
                                         </div>
@@ -129,14 +130,14 @@ export default function ExportDialog({
                 <div className="p-6 border-t border-gray-200 flex gap-3">
                     <button
                         onClick={onClose}
-                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors"
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors font-medium"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onExport}
                         disabled={selectedSections.length === 0 || isProcessing}
-                        className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
+                        className="flex-1 bg-[#34C759] hover:bg-[#28A745] text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium shadow-sm"
                     >
                         <Download size={18} />
                         Export & Download ({selectedSections.length})
