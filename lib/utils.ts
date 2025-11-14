@@ -6,7 +6,11 @@ let pdfjsLib: typeof import('pdfjs-dist') | null = null;
 if (typeof window !== 'undefined') {
     import('pdfjs-dist').then((pdfjs) => {
         pdfjsLib = pdfjs;
-        pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+        // Use the worker from the installed package instead of CDN
+        pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+            'pdfjs-dist/build/pdf.worker.min.mjs',
+            import.meta.url
+        ).toString();
     }).catch((error: unknown) => {
         console.error('Failed to load PDF.js:', error);
     });
@@ -19,7 +23,7 @@ export async function generateThumbnail(pdfData: string): Promise<string | null>
     if (!pdfjsLib) return null;
 
     try {
-        const loadingTask = await pdfjsLib.getDocument({ data: atob(pdfData) });
+        const loadingTask = pdfjsLib.getDocument({ data: atob(pdfData) });
         const pdf = await loadingTask.promise;
         const page = await pdf.getPage(1);
 
