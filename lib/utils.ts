@@ -19,7 +19,7 @@ export async function generateThumbnail(pdfData: string): Promise<string | null>
     if (!pdfjsLib) return null;
 
     try {
-        const loadingTask = pdfjsLib.getDocument({ data: atob(pdfData) });
+        const loadingTask = await pdfjsLib.getDocument({ data: atob(pdfData) });
         const pdf = await loadingTask.promise;
         const page = await pdf.getPage(1);
 

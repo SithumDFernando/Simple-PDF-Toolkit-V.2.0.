@@ -24,6 +24,6 @@ export interface PDFExtractResponse {
         pageNumber: number;
         fileName: string;
         pdfData: string;
-        thumbnail: null;
+        thumbnail: null; /*Why is this null?*/
     }>;
 }
